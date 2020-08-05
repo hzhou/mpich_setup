@@ -1,5 +1,7 @@
 if [[ $BASH == "/bin/bash" ]]; then
-    PS1="BSD1 \w$ ";
+    color="\[\e[0;32m\]"
+    reset="\[\e[0m\]"
+    PS1="${color}hostname${reset} \w$ ";
 else
     PS1="$ ";
 fi
@@ -77,10 +79,10 @@ function clone_git {
 
 function mpich_pr {
     cd $HOME/pull_requests
-    if test "$1" = "master" ; then
-        rm -rf mpich-master
-        git clone ../mpich-github mpich-master
-        cd mpich-master
+    if test "$1" = "main" ; then
+        rm -rf mpich-main
+        git clone ../mpich-github mpich-main
+        cd mpich-main
     else
         rm -rf mpich$1
         perl $HOME/bin/get_mpich_pr.pl $1
