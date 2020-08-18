@@ -30,8 +30,6 @@ export MAKEFLAGS="-j 48"
 alias ls="ls --color"
 alias grep='grep --color=auto'
 
-# alias blank="xset dpms force off"
-
 #----------------------------------------
 export CC=
 export CXX=
@@ -145,10 +143,7 @@ alias gitra="git commit --amend"
 alias gitraa="git commit -a --amend"
 
 MYMAKE=$HOME/mymake
-alias set_odd_even="export MPIR_CVAR_ODD_EVEN_CLIQUES=1"
-alias no_odd_even="export MPIR_CVAR_ODD_EVEN_CLIQUES="
 alias mymake="perl $MYMAKE/mymake.pl"
-alias build_modules="bash $HOME/mymake/build_modules.sh"
 export MODTARBALL="$HOME/modules.tar.gz"
 
 MYCONFIG="--disable-fortran --disable-romio --enable-g=dbg"
@@ -156,7 +151,7 @@ alias mymake_ch3="perl $MYMAKE/mymake.pl --with-device=ch3 $MYCONFIG"
 alias mymake_ucx="perl $MYMAKE/mymake.pl --with-device=ch4:ucx $MYCONFIG"
 alias mymake_ofi="perl $MYMAKE/mymake.pl --with-device=ch4:ofi $MYCONFIG"
 
-alias update_mymake='pushd $HOME/mymake && git pull && popd' 
+alias update_mymake='pushd $MYMAKE && git pull && popd' 
 
 #---------------------------------------- 
 export ch4=src/mpid/ch4/src
