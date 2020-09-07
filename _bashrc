@@ -77,14 +77,14 @@ function clone_git {
 
 function mpich_pr {
     cd $HOME/pull_requests
-    if test "$1" = "main" ; then
-        rm -rf mpich-main
-        git clone ../mpich-github mpich-main
-        cd mpich-main
-    else
+    if [[ "$1" =~ ^\d+$ ]] ; then
         rm -rf mpich$1
         perl $HOME/bin/get_mpich_pr.pl $1
         cd mpich$1
+    else
+        rm -rf mpich-$1
+        git clone -b $1 https://github.com/pmodels/mpich mpich-$1
+        cd mpich-$1
     fi
 }
 
@@ -142,9 +142,10 @@ alias gitrc="git rebase --continue"
 alias gitra="git commit --amend"
 alias gitraa="git commit -a --amend"
 
-MYMAKE=$HOME/mymake
+WORK=$HOME/work
+MYMAKE=$WORK/mymake
 alias mymake="perl $MYMAKE/mymake.pl"
-export MODTARBALL="$HOME/modules.tar.gz"
+export MODTARBALL="$WORK/modules.tar.gz"
 
 MYCONFIG="--disable-fortran --disable-romio --enable-g=dbg"
 alias mymake_ch3="perl $MYMAKE/mymake.pl --with-device=ch3 $MYCONFIG"
@@ -159,10 +160,7 @@ export ofi=src/mpid/ch4/netmod/ofi
 export ucx=src/mpid/ch4/netmod/ucx
 export shm=src/mpid/common/shm
 export posix=src/mpid/ch4/shm/posix
-export generic=src/mpid/ch4/generic
-export _ch4=$HOME/mpich-github/src/mpid/ch4/src
-export _ofi=$HOME/mpich-github/src/mpid/ch4/netmod/ofi
-export _ucx=$HOME/mpich-github/src/mpid/ch4/netmod/ucx
+export ch4am=src/mpid/ch4/generic/am
 
 export dbglog="-mpich-dbg=file -mpich-dbg-level=verbose -mpich-dbg-filename=dbg%d.log"
 #---------------------------------------- 
