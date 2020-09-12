@@ -36,32 +36,6 @@ export CXX=
 export F77=
 export FC=
 
-function set_pgi {
-    export PATH=$PATH:/opt/pgi/linux86-64-llvm/19.4/bin
-    export CC=pgcc
-    export CXX=pgc++
-    export F77=pgfortran
-    export FC=pgfortran
-}
-
-function set_sun {
-    export PATH=$PATH:/opt/OracleDeveloperStudio12.6/bin
-    export CC=suncc
-    export CXX=sunCC
-    export F77=sunf77
-    export FC=sunf95
-}
-
-function set_intel {
-    intel=$HOME/intel
-    export PATH=$PATH:$intel/bin
-    export INTEL_LICENSE_FILE=28518@lic001.cels.anl.gov
-    export CC=icc
-    export CXX=icpc
-    export F77=ifort
-    export FC=ifort
-}
-
 function set_gcc9 {
     export LD_LIBRARY_PATH=$HOME/opt/gcc-9/lib64:$LD_LIBRARY_PATH
     export CC=gcc-9
@@ -94,22 +68,6 @@ function mpich_pr_sync {
     fi
 }
 
-function mpich_whitespace {
-    cd $HOME/pull_requests
-    if test -d mpich-whitespace ; then
-        rm -rf mpich-whitespace
-    fi
-    
-    echo git clone mpich-github mpich-whitespace ...
-    git clone $HOME/mpich-github mpich-whitespace
-    cd mpich-whitespace
-    git config core.whitespace blank-at-eol,blank-at-eof,space-before-tab,tab-in-indent
-
-    git fetch origin
-    git checkout $1
-    git rebase --verbose --exec maint/hooks/pre-commit origin/master
-}
-
 function set_lib {
     if test -d _inst ; then
         rm -f $HOME/MPI
@@ -120,8 +78,6 @@ function set_lib {
     fi
     ls -l $HOME/MPI
 }
-
-complete -W 'MPICH3.2 MPICH3.3 MPICH-master MPI-coll MPI-debug MPI-fortran MPI-test OMPI4.0 share TOY' set_lib
 
 alias gitlog='git log -n 30 --format="format:%h %ad %s" --date="format:%m/%d %H:%M"'
 alias git-log='git log --stat'
