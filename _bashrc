@@ -62,6 +62,20 @@ function mpich_pr {
     fi
 }
 
+function mpich_build {
+    git submodule update --init
+    time ./autogen.sh |tee autogen.log
+    time ./configure --prefix=$PWD/_inst --enable-g=dbg --disable-shared --with-device=ch4:ofi |tee c.txt
+    time make install |tee m.txt
+}
+
+function mpich_build_quick {
+    git submodule update --init
+    time ./autogen.sh -quick -with-hydra -with-json |tee autogen.log
+    time ./configure --prefix=$PWD/_inst --enable-g=dbg --with-device=ch3 --disable-romio --disable-fortran |tee c.txt
+    time make install |tee m.txt
+}
+
 function mpich_pr_sync {
     if test -f $1 ; then
         cp -v $1 $HOME/mpich-github/$1
