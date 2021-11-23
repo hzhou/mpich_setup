@@ -65,7 +65,7 @@ function mpich_pr {
 function mpich_build {
     git submodule update --init
     time ./autogen.sh |tee autogen.log
-    time ./configure --prefix=$PWD/_inst --enable-g=dbg --disable-shared --with-device=ch4:ofi |tee c.txt
+    time ./configure --prefix=$PWD/_inst --enable-g=dbg --with-device=ch4:ofi |tee c.txt
     time make install |tee m.txt
 }
 
@@ -105,7 +105,7 @@ function test_mpi4py {
     # git checkout 3.0.3 -b build
     $PYTHON setup.py install --prefix=$PREFIX
     cd test
-    $PYTHON runtests.py -v | tee np-0.log
+    $PYTHON runtests.py -v 2>&1 | tee np-0.log
 }
 
 function set_test {
