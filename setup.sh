@@ -13,7 +13,7 @@ cp mpich_setup/_vimrc  .vimrc
 cp mpich_setup/get_mpich_pr.pl bin/
 
 if test -n "$name" ; then
-    sed -i -e "s,hostname,$name" .bashrc
+    sed -i -e "s,hostname,$name," .bashrc
 fi
 
 if test ! -d MyDef; then
