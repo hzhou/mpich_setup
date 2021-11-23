@@ -5,10 +5,16 @@ if test $0 != "mpich_setup/setup.sh" ; then
 	exit 1;
 fi
 
+name=$1
+
 mkdir -p bin pull_requests
 cp mpich_setup/_bashrc .bashrc
 cp mpich_setup/_vimrc  .vimrc
 cp mpich_setup/get_mpich_pr.pl bin/
+
+if test -n "$name" ; then
+    sed -i -e "s,hostname,$name" .bashrc
+fi
 
 if test ! -d MyDef; then
     git clone https://github.com/pmodels/mpich mpich-github
