@@ -93,6 +93,21 @@ function set_lib {
     ls -l $HOME/MPI
 }
 
+function test_mpi4py {
+    PYTHON=python
+    PREFIX=pull_requests/mpi4py/_inst
+    export PYTHONPATH=$PREFIX/lib64/$PYTHON/site-packages
+
+    cd $HOME/pull_requests
+    rm -rf mpi4py
+    git clone https://github.com/mpi4py/mpi4py
+    cd mpi4py
+    # git checkout 3.0.3 -b build
+    $PYTHON setup.py install --prefix=$PREFIX
+    cd test
+    $PYTHON runtests.py -v | tee np-0.log
+}
+
 function set_test {
     echo " --> [test.sh]"
     cat << EOF > test.sh

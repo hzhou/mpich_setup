@@ -5,7 +5,7 @@ if test $0 != "mpich_setup/setup.sh" ; then
 	exit 1;
 fi
 
-mkdir -p bin
+mkdir -p bin pull_requests
 cp mpich_setup/_bashrc .bashrc
 cp mpich_setup/_vimrc  .vimrc
 cp mpich_setup/get_mpich_pr.pl bin/
