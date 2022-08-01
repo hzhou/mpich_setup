@@ -53,7 +53,7 @@ function clone_git {
 
 function mpich_pr {
     cd $HOME/pull_requests
-    if [[ "$1" =~ ^\d+$ ]] ; then
+    if [[ "$1" =~ ^[0-9]+$ ]] ; then
         rm -rf mpich$1
         perl $HOME/bin/get_mpich_pr.pl $1
         cd mpich$1
@@ -145,13 +145,45 @@ quit \$_exitcode
 EOF
 }
 
-alias gitlog='git log -n 30 --format="format:%h %ad %s" --date="format:%m/%d %H:%M"'
-alias git-log='git log --stat'
-alias gitlist='git show --pretty="" --name-only'
+alias gitlog='git log -n 25 --format="format:%h %ad %s" --date="format:%m/%d %H:%M"'
+alias gitlog_more='git log -n 100 --format="format:%h %ad %s" --date="format:%m/%d %H:%M"'
+alias gitshow='git show --stat'
+alias gitstatus='git status --untracked-files=all --ignored'
+alias gitls='git ls-tree -r --name-only main'
 alias gitpick='git cherry-pick'
+alias gitpickca='git add --all && git cherry-pick --continue'
+alias gitupdate='git checkout main && git pull && git push gh-hzhou && git checkout @{-1}'
+alias gitupdate_main='git checkout main && git pull && git push gh-hzhou && git checkout @{-1} && git rebase main'
+alias gitbranch="git rev-parse --abbrev-ref HEAD"
+alias gitnew="git checkout main && git checkout -b"
+alias gitpush="git stash"
+alias gitpop="git stash pop"
+alias git_pr_push="git push gh-hzhou"
+alias gitpickaxe="git log -p -S"
+alias gitfile="git log --follow --"
+alias gitdummy="echo 1 >> dummy && git add dummy && git commit --allow-empty -m '---- START HERE ----'"
+alias gitstat="git-quick-stats --commits-per-author |head -n 40"
+alias vigit="vim .git/config"
+alias gitapply="git apply /tmp/t.patch"
 
-alias gitri="git rebase -i"
+alias gitrb="git rebase --abort"
 alias git_last_merg="git log -1 --merges --pretty=format:'%h'"
+alias gitrc="git rebase --continue"
+alias gitrca="git add --all && git rebase --continue"
+alias gitra="git commit --amend"
+alias gitraa="git commit -a --amend"
+
+alias gitok="perl $HOME/bin/git_commit_ok.pl"
+alias git_branch_delete="git branch --merged main | grep -v main | xargs git branch -D"
+
+function git_branch_delete_remote {
+    git fetch --prune gh-hzhou
+    git branch -r --merged main --list 'gh-hzhou/*' | sed 's/gh-hzhou\///' | grep -v main | xargs git push gh-hzhou --delete
+}
+
+function gitri10 {
+    git rebase -i HEAD~10
+}
 function gitrii {
     local commit=`git log -1 --merges --pretty=format:'%h'`
     git rebase -i $commit
@@ -160,9 +192,6 @@ function git_reset_last_merge {
     local commit=`git log -1 --merges --pretty=format:'%h'`
     git reset --hard $commit
 }
-alias gitrc="git rebase --continue"
-alias gitra="git commit --amend"
-alias gitraa="git commit -a --amend"
 
 WORK=$HOME
 MYMAKE=$WORK/mymake
