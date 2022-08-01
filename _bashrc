@@ -30,6 +30,8 @@ export MAKEFLAGS="-j 48"
 alias ls="ls --color"
 alias grep='grep --color=auto'
 
+alias cdsync='cd $(perl $HOME/bin/cdsync.pl)'
+
 #----------------------------------------
 export CC=
 export CXX=

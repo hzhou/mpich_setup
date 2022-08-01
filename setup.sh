@@ -11,6 +11,7 @@ mkdir -p bin pull_requests
 cp mpich_setup/_bashrc .bashrc
 cp mpich_setup/_vimrc  .vimrc
 cp mpich_setup/get_mpich_pr.pl bin/
+cp mpich_setup/cdsync.pl bin/
 
 if test -n "$name" ; then
     sed -i -e "s,hostname,$name," .bashrc
